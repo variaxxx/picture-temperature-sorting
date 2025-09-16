@@ -1,1 +1,1 @@
-# picture-temperature-sorting
+# Service for sorting pictures by temperature
