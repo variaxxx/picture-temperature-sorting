@@ -1,0 +1,37 @@
+:host {
+  display: block;
+
+  button {
+    &[data-priority="primary"] {
+      background-color: var(--color-blue-600);
+      color: white;
+      border-color: white;
+
+      &:hover {
+        background-color: var(--color-blue-500);
+        color: var(--color-blue-100);
+      }
+
+      &:focus-visible {
+        outline-color: var(--color-blue-500);
+      }
+    }
+
+    &[data-priority="secondary"] {
+      background-color: white;
+      color: var(--color-neutral-600);
+      border-color: var(--color-neutral-100);
+      font-weight: var(--font-weight-medium);
+
+      &:hover {
+        background-color: var(--color-neutral-100);
+        border-color: oklch(92.2% 0 0);
+        color: var(--color-black);
+      }
+
+      &:focus-visible {
+        outline-color: var(--color-black-500);
+      }
+    }
+  }
+}

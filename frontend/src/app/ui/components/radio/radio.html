@@ -1,0 +1,57 @@
+<label class="
+    flex
+    justify-start
+    items-center
+    gap-3
+    px-6
+    py-3
+    rounded-3xl
+    max-w-[256px]
+    has-[input:checked]:bg-neutral-100
+    has-[input:checked]:text-black
+    text-neutral-600
+    cursor-pointer
+    mx-auto
+    transition-all
+  ">
+  <input type="radio" [value]="valueOption()" [name]="name()" [checked]="value() === valueOption()" (change)="select()"
+    class="
+      bg-white
+      rounded-full
+      appearance-none
+      w-4
+      min-w-4
+      h-4
+      border-1
+      border-neutral-400
+
+      flex
+      items-center
+      justify-center
+
+      checked:bg-blue-500
+      checked:border-transparent
+      before:content-['']
+      before:block
+      before:w-1.5
+      before:h-1.5
+      before:rounded-full
+      before:bg-white
+      before:scale-0
+      before:transition-transform
+      checked:before:scale-100
+
+      transition-colors
+    ">
+
+  <span
+    class="
+      font-medium
+      transition-colors
+      text-s
+    "
+    [class.active]="value() === valueOption()"
+    >
+    <ng-content></ng-content>
+  </span>
+</label>

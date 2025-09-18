@@ -1,0 +1,27 @@
+<label class="
+    flex
+    flex-col
+    bg-neutral-100
+    rounded-4xl
+    px-8
+    py-4
+    cursor-text
+    border-2
+    border-transparent
+    has-[input:focus]:border-blue-400
+    transition-colors max-w-[256px]">
+  <span class="
+    text-neutral-400
+    text-xs
+    font-medium
+    select-none">
+    <ng-content></ng-content>
+  </span>
+  <input [type]="type()" class="
+      text-md
+      font-normal
+      outline-none
+      focus:text-black
+      text-neutral-600
+      w-full" [value]="value()">
+</label>

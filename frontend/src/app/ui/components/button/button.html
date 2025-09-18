@@ -1,0 +1,16 @@
+<button [attr.data-priority]="priority()" class="
+  rounded-4xl
+  py-4
+  px-8
+  cursor-pointer
+  transition-all
+  font-bold
+  active:scale-95
+  focus:border-2
+  border-2
+  focus:outline-2
+  outline-transparent
+  w-full
+  max-w-[256px]" [type]="type()">
+  <ng-content></ng-content>
+</button>
