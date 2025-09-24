@@ -1,6 +1,11 @@
 import { ChangeDetectionStrategy, Component, forwardRef, input, signal } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
+export interface RadioOption {
+  label: string;
+  value: string;
+}
+
 @Component({
   selector: "app-radio",
   imports: [],
@@ -16,18 +21,18 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
   ],
 })
 export class Radio implements ControlValueAccessor {
-  valueOption = input.required<string>();
+  valueOptions = input.required<RadioOption[]>();
   name = input.required<string>();
 
   value = signal<string | null>(null);
 
-  select(): void {
-    this.value.set(this.valueOption());
+  select(value: string): void {
+    this.value.set(value);
     this.onChange(this.value());
     this.onTouched();
   }
 
-  writeValue(obj: any): void {
+  writeValue(obj: string): void {
     this.value.set(obj);
   }
 

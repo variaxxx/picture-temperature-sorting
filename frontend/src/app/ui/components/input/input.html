@@ -8,8 +8,10 @@
     cursor-text
     border-2
     border-transparent
-    has-[input:focus]:border-blue-400
-    transition-colors max-w-[256px]">
+    has-[input:not(:required):focus]:border-blue-400
+    has-[input:required]:border-red-400
+    transition-colors"
+    >
   <span class="
     text-neutral-400
     text-xs
@@ -17,11 +19,11 @@
     select-none">
     <ng-content></ng-content>
   </span>
-  <input [type]="type()" class="
-      text-md
-      font-normal
-      outline-none
-      focus:text-black
-      text-neutral-600
-      w-full" [value]="value()">
+  <input
+    [type]="type()"
+    class="text-md font-normal outline-none focus:text-black text-neutral-600 w-full"
+    [value]="value() ?? ''"
+    (input)="onInput($event)"
+    [required]="invalidCondition()"
+    >
 </label>

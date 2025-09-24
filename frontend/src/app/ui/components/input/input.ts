@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, forwardRef, input, signal } from "@angular/core";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from "@angular/forms";
 
 export type InputType = "text" | "number";
 
 @Component({
   selector: "app-input",
-  imports: [],
+  imports: [FormsModule],
   templateUrl: "./input.html",
   styleUrl: "./input.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -18,13 +18,26 @@ export type InputType = "text" | "number";
   ],
 })
 export class Input implements ControlValueAccessor {
-  protected value = signal<string>("");
-  public type = input<InputType>("text");
+  protected value = signal<string | number | null>("");
 
-  writeValue(value: string): void {
-    this.value.set(value);
-    this.onChange(value);
+  public type = input<InputType>("text");
+  public invalidCondition = input<boolean>(false, { alias: "invalid" });
+
+  onInput(event: Event): void {
+    const raw = (event.target as HTMLInputElement).value;
+
+    let val: number | string | null = raw;
+    if (this.type() === "number") {
+      val = raw === "" ? null : Number(raw);
+    }
+
+    this.value.set(val);
+    this.onChange(val);
     this.onTouched();
+  }
+
+  writeValue(value: string | number | null): void {
+    this.value.set(value);
   }
 
   registerOnChange(fn: any): void {
@@ -35,6 +48,6 @@ export class Input implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  onChange = (value: string): any => {};
+  onChange = (value: string | number | null): any => {};
   onTouched = (): any => {};
 }

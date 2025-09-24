@@ -5,3 +5,20 @@ body {
   height: 100%;
   overflow-x: hidden;
 }
+
+@layer utilities {
+  .hide-scrollbar {
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .styled-scrollbar {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: auto transparent;
+  }
+}

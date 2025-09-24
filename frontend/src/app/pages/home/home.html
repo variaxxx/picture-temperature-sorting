@@ -1,60 +1,67 @@
-<div class="container mx-auto h-full flex flex-col justify-center items-center">
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 place-items-center">
-    <form class="h-full w-full flex flex-col justify-center items-center px-4" [formGroup]="form">
+<div class="container mx-auto min-h-screen flex flex-col justify-center items-center">
+  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 place-items-start mt-8 sm:mt-0 w-full">
+    <form class="h-full w-full flex flex-col justify-center items-center px-8" [formGroup]="form">
       <h1 class="text-center text-3xl font-extrabold mb-4 select-none">Parameters</h1>
 
-      <div class="flex flex-col items-center gap-1 w-full max-w-[256px]">
-        <h2 class="font-bold text-neutral-600 px-4 max-w-[224px] w-full select-none">Method</h2>
-        <app-radio [valueOption]="metodOptions.TANNER_HELLAND" formControlName="method" name="method" class="w-full">
-          Tanner Helland
-        </app-radio>
-        <app-radio [valueOption]="metodOptions.MODIFIED_TH" formControlName="method" name="method" class="w-full">
-          Modified Tanner Helland
-        </app-radio>
-        <app-radio [valueOption]="metodOptions.MC_CAMY" formControlName="method" name="method" class="w-full">
-          McCamy
-        </app-radio>
+      <div class="flex flex-col items-center gap-1 w-full max-w-md">
+        <h2 class="font-bold text-neutral-600 px-4 max-w-sm w-full select-none">Method</h2>
+        <app-radio
+          [valueOptions]="metodOptions"
+          formControlName="method"
+          name="method"
+          class="w-full"
+          ></app-radio>
       </div>
 
-      <div class="h-0.5 rounded-[1px] bg-neutral-100 w-full max-w-[224px] my-4"></div>
+      <div class="h-0.5 rounded-[1px] bg-neutral-100 w-full max-w-sm my-4"></div>
 
-      <h2 class="font-bold text-neutral-600 px-4 max-w-[224px] w-full mb-2 select-none">Order</h2>
-      <div class="flex items-center w-full relative">
+      <h2 class="font-bold text-neutral-600 px-4 max-w-sm w-full mb-2 select-none">Order</h2>
+      <div class="flex items-center w-full relative max-w-md">
         <div class="absolute bottom-0 left-0 h-1 bg-blue-500 rounded transition-all duration-300" [style.width.%]="50"
           [style.transform]="'translateX(' + (order === orderOptions.COOL_FIRST ? 100 : 0) + '%)'"></div>
 
         <div
-          class="py-4 px-8 cursor-pointer [.active]:text-black rounded-4xl transition-colors text-neutral-600 font-medium text-center"
+          class="py-4 px-8 cursor-pointer [.active]:text-black rounded-4xl transition-colors text-neutral-600 font-medium text-center w-1/2"
           [class.active]="order === orderOptions.WARM_FIRST" (click)="changeOrder(orderOptions.WARM_FIRST)">
           Warm first
         </div>
 
         <div
-          class="py-4 px-8 cursor-pointer [.active]:text-black rounded-4xl transition-colors text-neutral-600 font-medium text-center"
+          class="py-4 px-8 cursor-pointer [.active]:text-black rounded-4xl transition-colors text-neutral-600 font-medium text-center w-1/2"
           [class.active]="order === orderOptions.COOL_FIRST" (click)="changeOrder(orderOptions.COOL_FIRST)">
           Cool first
         </div>
       </div>
 
-      <div class="h-0.5 rounded-[1px] bg-neutral-100 w-full max-w-[224px] my-4"></div>
+      <div class="h-0.5 rounded-[1px] bg-neutral-100 w-full max-w-sm my-4"></div>
 
-      <div class="flex flex-col items-center w-full max-w-[256px]">
-        <h2 class="font-bold text-neutral-600 px-4 max-w-[224px] w-full mb-2 select-none">Filters</h2>
+      <div class="flex flex-col items-center w-full max-w-md">
+        <h2 class="font-bold text-neutral-600 px-4 max-w-sm w-full mb-2 select-none">Filters</h2>
 
-        <app-input formControlName="minTemp" type="number" class="mb-4">Min temperature</app-input>
-        <app-input formControlName="maxTemp" type="number">Max temperature</app-input>
+        <app-input
+          formControlName="minTemp"
+          type="number"
+          class="mb-4 w-full"
+          [invalid]="this.form.controls.minTemp.invalid && this.form.controls.minTemp.touched"
+          >Min temperature</app-input>
+        <app-input
+          formControlName="maxTemp"
+          type="number"
+          class="mb-4 sm:mb-0 w-full"
+          [invalid]="this.form.controls.maxTemp.invalid && this.form.controls.maxTemp.touched"
+          >Max temperature</app-input>
       </div>
     </form>
 
-    <div class="bg-blue-500 h-full w-full lg:col-span-3">
-      <span>Preview</span>
+    <div class="h-full w-full xl:col-span-3 px-4">
+      <app-files-field [formControl]="form.controls.files" class="max-h-[calc(100dvh-270px)] h-full w-full"></app-files-field>
     </div>
   </div>
 
-  <div class="grid grid-cols-1">
+  <div class="grid grid-cols-1 my-8">
     <div class="w-full flex gap-4">
-      <app-button type="submit" class="w-full mt-4" (click)="onSubmit()">Proceed</app-button>
-      <app-button type="submit" class="w-full mt-4" priority="secondary">Reset</app-button>
+      <app-button type="submit" class="w-full" (click)="onSubmit()">Proceed</app-button>
+      <app-button type="submit" class="w-full" priority="secondary" (click)="resetForm()">Reset</app-button>
     </div>
   </div>
 </div>

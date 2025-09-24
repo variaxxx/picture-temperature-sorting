@@ -4,6 +4,8 @@ import { TemperatureService } from "./temperature.service";
 import { BadRequestException, Body, Controller, Post, UploadedFiles, UseInterceptors } from "@nestjs/common";
 import { FilesInterceptor } from "@nestjs/platform-express";
 
+// TODO: validate file format
+
 @Controller("temp")
 export class TemperatureController {
   constructor(

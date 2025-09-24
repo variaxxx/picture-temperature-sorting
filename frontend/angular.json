@@ -51,16 +51,15 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets/",
+                "output": "assets/"
               }
             ],
             "styles": [
               "src/styles.scss"
-            ],
-            "fileReplacements": [
-              {
-                "replace": "src/environments/environment.ts",
-                "with": "src/environments/environment.prod.ts"
-              }
             ]
           },
           "configurations": {
@@ -77,7 +76,13 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
             },
             "development": {
               "optimization": false,
