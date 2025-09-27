@@ -1,0 +1,32 @@
+<div class="container py-8 mx-auto flex flex-col items-center px-4">
+  <div class="grid grid-cols-2 gap-4 md:w-1/2 mb-8">
+    <app-button priority="secondary" (click)="back()">Back</app-button>
+    <app-button (click)="export()">Export</app-button>
+  </div>
+
+  <form class="flex flex-col w-full lg:w-1/2 md:w-3/4 mb-8" [formGroup]="form">
+    <h1 class="font-bold text-2xl mb-4">Settings</h1>
+
+    <span class="font-medium text-neutral-600 mb-1 px-4">Pictures size</span>
+    <app-radio [valueOptions]="pictureSizeOptions" formControlName="picSize"></app-radio>
+
+    <span class="font-medium text-neutral-600 my-1 px-4">Pictures cropping behavior</span>
+    <app-radio [valueOptions]="pictureCroppingBehavior" formControlName="picCroppingBehavior"></app-radio>
+  </form>
+
+  <div class="flex flex-col gap-4 lg:w-1/2 md:w-3/4" id="export-container">
+    <h1 class="font-bold text-2xl">Your collage:</h1>
+    @for (resItem of result!.data; track resItem.name) {
+      <div class="w-full flex flex-col items-center">
+        <img
+          [src]="picUrl(resItem.name)"
+          alt="image"
+          class="image shadow-md rounded-3xl object-cover"
+          [attr.data-size]="form.controls.picSize.value"
+          [attr.data-crop-behavior]="cropBehavior"
+          >
+        <span class="image-label font-medium text-xl text-neutral-600">{{ resItem.temperature }}</span>
+      </div>
+    }
+  </div>
+</div>

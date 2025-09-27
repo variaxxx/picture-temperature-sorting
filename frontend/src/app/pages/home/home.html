@@ -1,0 +1,75 @@
+<div
+  class="fixed w-screen h-screen bg-blue-100 opacity-0 pointer-events-none transition-opacity z-10 flex items-center justify-center flex-col gap-4 px-8"
+  [class.opacity-100]="awaitingResponse()"
+  [class.pointer-events-auto]="awaitingResponse()"
+  >
+  <div class="w-12 h-12 border-8 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+  <span class="font-medium">Awaiting response from server...</span>
+</div>
+
+<div class="container mx-auto min-h-screen flex flex-col justify-center items-center">
+  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 place-items-start mt-8 w-full">
+    <form class="h-full w-full flex flex-col justify-center items-center px-8" [formGroup]="form">
+      <h1 class="text-center text-3xl font-extrabold mb-4 select-none">Parameters</h1>
+
+      <div class="flex flex-col items-center gap-1 w-full max-w-md">
+        <h2 class="font-bold text-neutral-600 px-4 max-w-sm w-full select-none">Method</h2>
+        <app-radio
+          [valueOptions]="metodOptions"
+          formControlName="method"
+          class="w-full"
+          ></app-radio>
+      </div>
+
+      <div class="h-0.5 rounded-[1px] bg-neutral-100 w-full max-w-sm my-4"></div>
+
+      <h2 class="font-bold text-neutral-600 px-4 max-w-sm w-full mb-2 select-none">Order</h2>
+      <div class="flex items-center w-full relative max-w-md">
+        <div class="absolute bottom-0 left-0 h-1 bg-blue-500 rounded transition-all duration-300" [style.width.%]="50"
+          [style.transform]="'translateX(' + (order === orderOptions.COOL_FIRST ? 100 : 0) + '%)'"></div>
+
+        <div
+          class="py-4 px-8 cursor-pointer [.active]:text-black rounded-4xl transition-colors text-neutral-600 font-medium text-center w-1/2"
+          [class.active]="order === orderOptions.WARM_FIRST" (click)="changeOrder(orderOptions.WARM_FIRST)">
+          Warm first
+        </div>
+
+        <div
+          class="py-4 px-8 cursor-pointer [.active]:text-black rounded-4xl transition-colors text-neutral-600 font-medium text-center w-1/2"
+          [class.active]="order === orderOptions.COOL_FIRST" (click)="changeOrder(orderOptions.COOL_FIRST)">
+          Cool first
+        </div>
+      </div>
+
+      <div class="h-0.5 rounded-[1px] bg-neutral-100 w-full max-w-sm my-4"></div>
+
+      <div class="flex flex-col items-center w-full max-w-md">
+        <h2 class="font-bold text-neutral-600 px-4 max-w-sm w-full mb-2 select-none">Filters</h2>
+
+        <app-input
+          formControlName="minTemp"
+          type="number"
+          class="mb-4 w-full"
+          [invalid]="this.form.controls.minTemp.invalid && this.form.controls.minTemp.touched"
+          >Min temperature</app-input>
+        <app-input
+          formControlName="maxTemp"
+          type="number"
+          class="mb-4 sm:mb-0 w-full"
+          [invalid]="this.form.controls.maxTemp.invalid && this.form.controls.maxTemp.touched"
+          >Max temperature</app-input>
+      </div>
+    </form>
+
+    <div class="h-full w-full xl:col-span-3 px-4">
+      <app-files-field [formControl]="form.controls.files" class="max-h-[80dvh] min-h-[512px] h-full w-full"></app-files-field>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 my-8">
+    <div class="w-full flex gap-4">
+      <app-button type="submit" class="w-full" (click)="onSubmit()">Proceed</app-button>
+      <app-button type="submit" class="w-full" priority="secondary" (click)="resetForm()">Reset</app-button>
+    </div>
+  </div>
+</div>

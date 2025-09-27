@@ -1,0 +1,32 @@
+<div
+  class="bg-blue-50 border-dashed border-4 rounded-[40px] border-blue-300 h-full w-full flex justify-center items-center flex-col px-6 transition-colors relative overflow-hidden"
+  (drop)="onFileDrop($event)"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave($event)"
+  [class.py-6]="!!files().length"
+  [class.py-12]="!files().length"
+  >
+  <div class="absolute flex flex-col justify-center items-center bg-blue-500 inset-0 transition-opacity pointer-events-none" [style.opacity]="isDraggedOver() ? 1 : 0">
+    <app-icon icon="upload" class="text-blue-50 w-24 mb-4"></app-icon>
+    <span class="font-bold text-blue-50 mb-2 text-2xl text-center">Drop it right HERE!</span>
+  </div>
+  @if (!files().length) {
+    <img src="assets/pics/Folder.png" alt="folder" class="w-24 mb-4">
+    <span class="font-bold text-black mb-2 text-2xl text-center">Drag your photos here to upload</span>
+    <span class="font-medium text-neutral-600 mb-2">OR</span>
+    <app-button
+      (click)="triggerFileSelect()"
+      size="sm"
+      >
+      Browse files
+  </app-button>
+  } @else {
+    <div class="flex flex-col gap-2 w-full h-full overflow-y-scroll overflow-x-hidden styled-scrollbar pr-4">
+      @for (file of files(); track $index) {
+      <app-file-item [file]="file" (remove)="remove($event)"></app-file-item>
+      }
+    </div>
+    <app-button (click)="triggerFileSelect()" class="mt-6" priority="secondary">Browse files</app-button>
+  }
+  <input type="file" class="hidden" (change)="onFileChange($event)" multiple #fileInput>
+</div>

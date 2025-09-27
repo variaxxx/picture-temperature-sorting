@@ -1,0 +1,51 @@
+:host {
+  display: block;
+
+  button {
+    &[data-priority="primary"] {
+      background-color: oklch(54.6% 0.245 262.881);;
+      color: white;
+      border-color: transparent;
+
+      &:hover {
+        background-color: var(--color-blue-500);
+        color: oklch(93.2% 0.032 255.585);
+      }
+
+      &:focus-visible {
+        outline-color: var(--color-blue-500);
+      }
+    }
+
+    &[data-priority="secondary"] {
+      background-color: white;
+      color: var(--color-neutral-600);
+      border-color: var(--color-neutral-100);
+      font-weight: var(--font-weight-medium);
+
+      &:hover {
+        background-color: var(--color-neutral-100);
+        border-color: oklch(92.2% 0 0);
+        color: var(--color-black);
+      }
+
+      &:focus-visible {
+        outline-color: var(--color-black-500);
+      }
+    }
+
+    &[data-size="sm"] {
+      border-radius: var(--radius-4xl);
+      padding-block: calc(var(--spacing) * 2);
+      padding-inline: calc(var(--spacing) * 4);
+      font-size: var(--text-sm);
+      line-height: var(--tw-leading), var(--text-sm--line-height);
+    }
+
+    &[data-size="md"] {
+      border-radius: var(--radius-4xl);
+      padding-block: calc(var(--spacing) * 3);
+      padding-inline: calc(var(--spacing) * 6);
+    }
+  }
+}

@@ -1,0 +1,11 @@
+@layer utilities {
+  :host {
+    fill: none;
+    stroke: currentColor;
+
+    &.filled {
+      fill: currentColor;
+      stroke: none;
+    }
+  }
+}

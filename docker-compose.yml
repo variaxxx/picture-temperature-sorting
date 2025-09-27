@@ -1,0 +1,33 @@
+services:
+  nginx:
+    container_name: app-nginx
+    image: nginx:stable-alpine
+    restart: on-failure
+    ports:
+      - "80:80"
+    volumes:
+      - "./nginx.conf:/etc/nginx/nginx.conf"
+    depends_on:
+      - frontend
+      - backend                                                
+    networks:
+      - dev
+
+  frontend:
+    container_name: app-frontend
+    build: frontend/
+    restart: unless-stopped
+    depends_on:
+      - backend
+    networks:
+      - dev
+
+  backend:
+    container_name: app-backend
+    build: backend/
+    restart: unless-stopped
+    networks:
+      - dev
+
+networks:
+  dev:
