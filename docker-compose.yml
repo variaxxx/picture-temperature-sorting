@@ -1,5 +1,6 @@
 services:
   nginx:
+    container_name: app-nginx
     image: nginx:stable-alpine
     restart: on-failure
     ports:
@@ -13,6 +14,7 @@ services:
       - dev
 
   frontend:
+    container_name: app-frontend
     build: frontend/
     restart: unless-stopped
     depends_on:
@@ -21,6 +23,7 @@ services:
       - dev
 
   backend:
+    container_name: app-backend
     build: backend/
     restart: unless-stopped
     networks:
