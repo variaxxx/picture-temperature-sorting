@@ -3,19 +3,18 @@ import { inject, Injectable } from "@angular/core";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { Observable, tap, zip } from "rxjs";
 
-export interface IconsConfig {
-  assetsPath: string;
-  icons: string[];
-}
-
-export const iconsConfig: IconsConfig = {
+export const iconsConfig = {
   assetsPath: "assets/icons",
   icons: [
     "upload",
     "picture",
     "close",
-  ],
+    "warning",
+    "info",
+  ] as const,
 };
+
+export type IconsConfig = typeof iconsConfig;
 
 @Injectable({ providedIn: "root" })
 export class IconService {
@@ -53,6 +52,7 @@ export class IconService {
     return zip(
       config.icons.map(icon => this.registerIcon(icon)),
     ).pipe(tap(() => {
+      // eslint-disable-next-line no-console
       console.log("Icons initialized");
     }));
   }

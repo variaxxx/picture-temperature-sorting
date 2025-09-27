@@ -196,7 +196,7 @@ export class TemperatureService {
 
     const temp = this.rgb2tempTH(avgRgb);
 
-    await sharp(picture.buffer).toFile(`tests/tannerHelland/${temp}-${Date.now()}.${picture.originalname.split(".")[1]}`);
+    // await sharp(picture.buffer).toFile(`tests/tannerHelland/${temp}-${Date.now()}.${picture.originalname.split(".")[1]}`);
 
     return temp;
   }
@@ -208,7 +208,7 @@ export class TemperatureService {
 
     const temp = this.rgb2temp(avgRgb);
 
-    await sharp(picture.buffer).toFile(`tests/modifiedTH/${temp}-${Date.now()}.${picture.originalname.split(".")[1]}`);
+    // await sharp(picture.buffer).toFile(`tests/modifiedTH/${temp}-${Date.now()}.${picture.originalname.split(".")[1]}`);
 
     return temp;
   }
@@ -229,7 +229,7 @@ export class TemperatureService {
       cct = 40000;
     }
 
-    await sharp(picture.buffer).toFile(`tests/mcCamy/${cct}-${Date.now()}.${picture.originalname.split(".")[1]}`);
+    // await sharp(picture.buffer).toFile(`tests/mcCamy/${cct}-${Date.now()}.${picture.originalname.split(".")[1]}`);
 
     return cct;
   }

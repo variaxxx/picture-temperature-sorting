@@ -1,7 +1,8 @@
 import { routes } from "./app.routes";
+import { ErrorHandlerService } from "./error-handler.service";
 import { iconsConfig, IconService } from "./ui/components/icon/icon.service";
 import { provideHttpClient } from "@angular/common/http";
-import { ApplicationConfig, inject, provideAppInitializer, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from "@angular/core";
+import { ApplicationConfig, ErrorHandler, inject, provideAppInitializer, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from "@angular/core";
 import { provideRouter } from "@angular/router";
 import { firstValueFrom } from "rxjs";
 
@@ -17,5 +18,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     provideAppInitializer(appInit),
+    { provide: ErrorHandler, useClass: ErrorHandlerService },
   ],
 };

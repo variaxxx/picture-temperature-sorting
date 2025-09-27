@@ -1,0 +1,3 @@
+@for (n of notifications$ | async; track n.id ) {
+  <app-notification [notification]="n" class="shadow-md"></app-notification>
+}

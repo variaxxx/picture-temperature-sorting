@@ -1,13 +1,12 @@
-import { ChangeDetectionStrategy, Component, signal } from "@angular/core";
+import { NotificationsStack } from "./ui/components/notification/components/notifications-stack/notifications-stack";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
 
 @Component({
   selector: "app-root",
-  imports: [RouterOutlet],
-  template: `<router-outlet></router-outlet>`,
+  imports: [RouterOutlet, NotificationsStack],
+  template: `<router-outlet></router-outlet> <app-notifications-stack></app-notifications-stack>`,
   styles: ":host { height: 100%; display: block; }",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class App {
-  protected readonly title = signal("frontend");
-}
+export class App {}

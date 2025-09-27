@@ -1,0 +1,9 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 50;
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+}

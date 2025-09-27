@@ -1,0 +1,67 @@
+:host {
+  &[data-type="error"] {
+    --bg-color: oklch(97.1% 0.013 17.38);
+    --primary-color: oklch(70.4% 0.191 22.216);
+  }
+
+  &[data-type="warning"] {
+    --bg-color: oklch(98.7% 0.026 102.212);
+    --primary-color: oklch(79.5% 0.184 86.047);
+  }
+
+  &[data-type="info"] {
+    --bg-color: oklch(97% 0.014 254.604);
+    --primary-color: oklch(70.7% 0.165 254.624);
+  }
+
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  padding: 1rem;
+  border-radius: var(--radius-3xl);
+  overflow: hidden;
+
+  animation: notification 3s cubic-bezier(0.68, -0.55, 0.265, 1.35) forwards;
+
+  &:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 3px;
+    width: 100%;
+    background-color: var(--primary-color);
+    animation: progress 3s linear forwards;
+  }
+
+  background-color: white;
+}
+
+@keyframes notification {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(100%);
+  }
+
+  20% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  80% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-100%);
+  }
+}
+
+@keyframes progress {
+  100% {
+    right: 100%;
+  }
+}

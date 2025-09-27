@@ -1,4 +1,4 @@
-import { Injectable, Logger } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import * as math from "mathjs";
 
 export interface ColorXYZ {
@@ -27,8 +27,6 @@ export interface ColorLAB {
 
 @Injectable()
 export class ColorConverterService {
-  private readonly logger = new Logger(ColorConverterService.name);
-
   private readonly matrixSrgbXyz = math.matrix([
     [0.4124564, 0.3575761, 0.1804375],
     [0.2126729, 0.7151522, 0.0721750],
@@ -74,7 +72,6 @@ export class ColorConverterService {
       y = xyz.y / (xyz.x + xyz.y + xyz.z);
     }
 
-    this.logger.debug(`xyY: ${x}, ${y}, ${xyz.y}`);
     return { x, y, Y: xyz.y };
   }
 

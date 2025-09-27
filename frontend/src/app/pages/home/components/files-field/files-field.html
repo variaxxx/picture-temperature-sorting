@@ -1,8 +1,10 @@
 <div
-  class="bg-blue-50 border-dashed border-4 rounded-[40px] border-blue-300 h-full w-full flex justify-center items-center flex-col p-6 transition-colors relative overflow-hidden"
+  class="bg-blue-50 border-dashed border-4 rounded-[40px] border-blue-300 h-full w-full flex justify-center items-center flex-col px-6 transition-colors relative overflow-hidden"
   (drop)="onFileDrop($event)"
   (dragover)="onDragOver($event)"
   (dragleave)="onDragLeave($event)"
+  [class.py-6]="!!files().length"
+  [class.py-12]="!files().length"
   >
   <div class="absolute flex flex-col justify-center items-center bg-blue-500 inset-0 transition-opacity pointer-events-none" [style.opacity]="isDraggedOver() ? 1 : 0">
     <app-icon icon="upload" class="text-blue-50 w-24 mb-4"></app-icon>

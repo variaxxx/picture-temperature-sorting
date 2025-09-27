@@ -1,11 +1,14 @@
 import { ApiService } from "../../common/services/api.service";
+import { minArrayLength } from "../../common/validators/min-array-length.validator";
 import { Button } from "../../ui/components/button/button";
 import { Input } from "../../ui/components/input/input";
+import { NotificationService } from "../../ui/components/notification/notification.service";
 import { Radio, RadioOption } from "../../ui/components/radio/radio";
 import { FilesField } from "./components/files-field/files-field";
-import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject, signal } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { firstValueFrom } from "rxjs";
+import { Router } from "@angular/router";
+import { catchError, firstValueFrom, of, tap, timeout } from "rxjs";
 
 export enum MethodOption {
   TANNER_HELLAND = "TH",
@@ -33,6 +36,10 @@ export enum OrderOption {
 })
 export class Home {
   private readonly apiService = inject(ApiService);
+  private readonly router = inject(Router);
+  private readonly notificationService = inject(NotificationService);
+
+  protected awaitingResponse = signal<boolean>(false);
 
   protected metodOptions: RadioOption[] = [
     {
@@ -67,6 +74,7 @@ export class Home {
     maxTemp: new FormControl<number | null>(null, [Validators.min(0)]),
     files: new FormControl<File[]>([], {
       nonNullable: true,
+      validators: [minArrayLength(1)],
     }),
   });
 
@@ -83,13 +91,30 @@ export class Home {
   }
 
   onSubmit(): void {
-    firstValueFrom(this.apiService.calculateTemp({
+    if (!this.form.valid)
+      return this.notificationService.show("error", "Incorrectly filled form");
+
+    const payload = {
       method: this.form.controls.method.value,
       order: this.form.controls.order.value,
       files: this.form.controls.files.value,
       minTemp: this.form.controls.minTemp.value ?? undefined,
       maxTemp: this.form.controls.maxTemp.value ?? undefined,
-    }));
-    console.log(this.form.value);
+    };
+
+    this.awaitingResponse.set(true);
+    firstValueFrom(this.apiService.calculateTemp(payload).pipe(
+      timeout(15000),
+      tap(() => {
+        this.awaitingResponse.set(false);
+        this.router.navigateByUrl("/collage");
+      }),
+      catchError((e) => {
+        this.awaitingResponse.set(false);
+        console.error(`Error while fetching API: ${e}`);
+        this.notificationService.show("error", "Error sending request to server. Try again later.");
+        return of(undefined);
+      }),
+    ));
   }
 }

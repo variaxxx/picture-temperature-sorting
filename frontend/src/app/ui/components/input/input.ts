@@ -7,7 +7,7 @@ export type InputType = "text" | "number";
   selector: "app-input",
   imports: [FormsModule],
   templateUrl: "./input.html",
-  styleUrl: "./input.scss",
+  styles: ":host {display: block;}",
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {

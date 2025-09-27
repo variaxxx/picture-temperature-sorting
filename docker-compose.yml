@@ -1,0 +1,30 @@
+services:
+  nginx:
+    image: nginx:stable-alpine
+    restart: on-failure
+    ports:
+      - "80:80"
+    volumes:
+      - "./nginx.conf:/etc/nginx/nginx.conf"
+    depends_on:
+      - frontend
+      - backend                                                
+    networks:
+      - dev
+
+  frontend:
+    build: frontend/
+    restart: unless-stopped
+    depends_on:
+      - backend
+    networks:
+      - dev
+
+  backend:
+    build: backend/
+    restart: unless-stopped
+    networks:
+      - dev
+
+networks:
+  dev:

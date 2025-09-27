@@ -1,8 +1,9 @@
-import { Icon } from "../../../../ui/components/icon/icon";
-import { FileItem } from "../file-item/file-item";
-import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, signal, ViewChild } from "@angular/core";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { Button } from "../../../../ui/components/button/button";
+import { Icon } from "../../../../ui/components/icon/icon";
+import { NotificationService } from "../../../../ui/components/notification/notification.service";
+import { FileItem } from "../file-item/file-item";
+import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, inject, signal, ViewChild } from "@angular/core";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
 @Component({
   selector: "app-files-field",
@@ -19,6 +20,8 @@ import { Button } from "../../../../ui/components/button/button";
   ],
 })
 export class FilesField implements ControlValueAccessor {
+  private readonly notificationService = inject(NotificationService);
+
   private imageTypes = ["image/png", "image/jpg", "image/jpeg"];
 
   protected isDraggedOver = signal<boolean>(false);
@@ -26,7 +29,7 @@ export class FilesField implements ControlValueAccessor {
 
   @ViewChild("fileInput") fileInput!: ElementRef<HTMLInputElement>;
 
-  triggerFileSelect() {
+  triggerFileSelect(): void {
     this.fileInput.nativeElement.click();
   }
 
@@ -72,11 +75,11 @@ export class FilesField implements ControlValueAccessor {
 
     for (const file of files) {
       if (!this.imageTypes.includes(file.type))
-        continue; // TODO: error msg
+        return this.notificationService.show("error", "Invalid photo type");
       if (updates.find(i => i.name === file.name) || this.files().find(i => i.name === file.name))
-        continue;
+        return this.notificationService.show("warning", "Photo with this name already added");
       if (updates.length + this.files.length > 50)
-        continue;
+        return this.notificationService.show("warning", "Photos limit exceeded");
 
       updates.push(file);
     }
@@ -98,6 +101,6 @@ export class FilesField implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  onChange = (value: any) => {};
-  onTouched = () => {};
+  onChange = (value: any): void => {};
+  onTouched = (): void => {};
 }

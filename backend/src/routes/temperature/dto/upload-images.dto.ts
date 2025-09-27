@@ -1,4 +1,5 @@
-import { IsEnum, IsInt, IsOptional, IsPositive } from "class-validator";
+import { Type } from "class-transformer";
+import { IsEnum, IsOptional, IsPositive } from "class-validator";
 
 export enum TempMethod {
   TANNER_HELLAND = "TH",
@@ -18,12 +19,12 @@ export class ProcessImagesDto {
   @IsEnum(TempOrder)
   order: TempOrder;
 
-  @IsInt()
+  @Type(() => Number)
   @IsPositive()
   @IsOptional()
   minTemp?: number;
 
-  @IsInt()
+  @Type(() => Number)
   @IsPositive()
   @IsOptional()
   maxTemp?: number;

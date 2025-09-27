@@ -1,0 +1,21 @@
+:host {
+  display: block;
+
+  .image {
+    &[data-size="sm"] {
+      width: 50%;
+    }
+
+    &[data-size="md"] {
+      width: 75%;
+    }
+
+    &[data-size="lg"] {
+      width: 100%;
+    }
+
+    &[data-crop-behavior='crop'] {
+      aspect-ratio: 1 / 1;
+    }
+  }
+}

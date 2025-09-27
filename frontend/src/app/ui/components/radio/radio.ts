@@ -10,7 +10,7 @@ export interface RadioOption {
   selector: "app-radio",
   imports: [],
   templateUrl: "./radio.html",
-  styleUrl: "./radio.scss",
+  styles: ":host {display: block;}",
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
@@ -22,7 +22,6 @@ export interface RadioOption {
 })
 export class Radio implements ControlValueAccessor {
   valueOptions = input.required<RadioOption[]>();
-  name = input.required<string>();
 
   value = signal<string | null>(null);
 

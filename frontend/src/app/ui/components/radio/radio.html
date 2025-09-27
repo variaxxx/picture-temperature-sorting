@@ -3,7 +3,6 @@
     <input
       type="radio"
       [value]="option"
-      [name]="name()"
       [checked]="value() === option.value"
       (change)="select(option.value)"
       class="bg-white rounded-full appearance-none w-4 min-w-4 h-4 border-1 border-neutral-400 flex items-center justify-center checked:bg-blue-500 checked:border-transparent before:content-[''] before:block before:w-1.5 before:h-1.5 before:rounded-full before:bg-white before:scale-0 before:transition-transform checked:before:scale-100 transition-colors cursor-pointer"

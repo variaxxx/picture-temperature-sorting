@@ -1,10 +1,9 @@
 import { TemperatureResponseDto, TemperatureResult } from "./dto/temperature-response.dto";
 import { ProcessImagesDto, TempMethod, TempOrder } from "./dto/upload-images.dto";
 import { TemperatureService } from "./temperature.service";
-import { BadRequestException, Body, Controller, Post, UploadedFiles, UseInterceptors } from "@nestjs/common";
+import { BadRequestException, Body, Controller, HttpCode, HttpStatus, Post, UploadedFiles, UseInterceptors } from "@nestjs/common";
 import { FilesInterceptor } from "@nestjs/platform-express";
-
-// TODO: validate file format
+import { Buffer } from "node:buffer";
 
 @Controller("temp")
 export class TemperatureController {
@@ -12,14 +11,22 @@ export class TemperatureController {
     private readonly service: TemperatureService,
   ) {}
 
+  private imageTypes = ["image/png", "image/jpg", "image/jpeg"];
+
   @Post()
   @UseInterceptors(FilesInterceptor("files", 50))
+  @HttpCode(HttpStatus.OK)
   async upload(
     @Body() dto: ProcessImagesDto,
     @UploadedFiles() files: Express.Multer.File[],
   ): Promise<TemperatureResponseDto> {
     const data: TemperatureResult[] = [];
     for (const file of files) {
+      file.originalname = Buffer.from(file.originalname, "latin1").toString("utf-8"); // чтоб кириллица не терялась
+
+      if (!this.imageTypes.includes(file.mimetype))
+        throw new BadRequestException("Invalid file type provided");
+
       let res;
       if (dto.method === TempMethod.TANNER_HELLAND) {
         res = await this.service.tannerHelland(file);

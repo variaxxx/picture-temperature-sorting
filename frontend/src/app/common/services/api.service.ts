@@ -2,7 +2,7 @@ import { env } from "../../../environments/environment";
 import { MethodOption, OrderOption } from "../../pages/home/home";
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
-import { catchError, of, tap } from "rxjs";
+import { Observable, tap } from "rxjs";
 
 export interface TemperatureRequestDto {
   files: File[];
@@ -12,11 +12,21 @@ export interface TemperatureRequestDto {
   maxTemp?: number;
 }
 
+export interface TemperatureResponseDto {
+  data: {
+    name: string;
+    temperature: number;
+  }[];
+}
+
 @Injectable({ providedIn: "root" })
 export class ApiService {
   private readonly http = inject(HttpClient);
 
-  calculateTemp(dto: TemperatureRequestDto) {
+  result?: TemperatureResponseDto;
+  files?: File[];
+
+  calculateTemp(dto: TemperatureRequestDto): Observable<TemperatureResponseDto> {
     const fd = new FormData();
 
     fd.set("method", dto.method);
@@ -29,14 +39,15 @@ export class ApiService {
     if (dto.maxTemp)
       fd.set("maxTemp", dto.maxTemp.toString());
 
-    return this.http.post(`${env.apiBaseUrl}/temp`, fd).pipe(
+    return this.http.post<TemperatureResponseDto>(`${env.apiBaseUrl}/temp`, fd).pipe(
       tap((res) => {
-        console.log(res);
-      }),
-      catchError((e) => {
-        console.error(`Error while fetching API: ${e}`);
-        return of(undefined);
+        this.result = res;
+        this.files = dto.files;
       }),
     );
+  }
+
+  hasResult(): boolean {
+    return !!this.result;
   }
 }
