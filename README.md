@@ -1,5 +1,5 @@
-<h1> Web service for sorting pictures by color temperature </h1>
-<p> A simple service that turns up to 50 images into a collage sorted by color temperature. </p>
+<h1 align="center"> 🌡 Web service for sorting pictures by color temperature </h1>
+<p> 🖼 A simple service that turns up to 50 images into a collage sorted by color temperature. </p>
 
 <img width="100%" src="https://github.com/user-attachments/assets/3d8661a4-1e54-4af8-b07b-e7d1a2d8b5ad" alt="Preview" /> 
 <img width="100%" alt="Preview" src="https://github.com/user-attachments/assets/a70819a5-b224-4521-9ac4-a79990574583" />
